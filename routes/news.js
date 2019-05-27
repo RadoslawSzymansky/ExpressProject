@@ -7,10 +7,10 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
-  // calback czyli to co po przechwyceniu requestu
+    // calback czyli to co po przechwyceniu requestu
 
-  // index to nazwa szablonu czyli tutaj index pug, drui praramet - obiekt. parametry przekazywane do szablony
-  res.render('index', { title: 'Express' });
+    // index to nazwa szablonu czyli tutaj index pug, drui praramet - obiekt. parametry przekazywane do szablony
+    res.render('news', { title: 'News' });
 });
 
 module.exports = router;
