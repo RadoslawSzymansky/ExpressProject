@@ -9,3 +9,6 @@
 6. dodanie skryptu nodemon .\bin\www
 7. Dla zwykklych apek jak nop budzet wystarcza nam endo=ointy bo express nie bedzie odpowiezialny za widok. Wtedy robimy --view=nowvieww
 8. Tworzenie routingow routes\ ----- index itp
+'
+
+Modele - schematy danych. 

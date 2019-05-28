@@ -1,15 +1,32 @@
 var createError = require('http-errors');
+var cookieSession = require('cookie-session');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var config = require('./config');
+var mongoose = require('mongoose');
+
 
 var indexRouter = require('./routes/index');
 var quizRouter = require('./routes/quiz');
 var adminRouter = require('./routes/admin');
 var newsRouter = require('./routes/news');
 
+//laczenie sie z baza danych :
 
+mongoose.connect(config.db, {
+  useNewUrlParser: true
+})
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('polaczone z db')
+});
+// pod kazdy router i pod kazda sciezke
+// pod kazdy typ get post delete itp
+// router.all('*', (req, res.next itd))
 
 var app = express();
 
@@ -25,11 +42,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(cookieSession({
+  name: 'session',
+  keys: config.keySession,
+  maxAge: config.maxAgeSession
+}))
+
 // tu tylko przekazujemy nasz path zeby mozna bylo w szablonach miec to
 app.use(function(req, res, next){
   // dzieki temu bd dostepne w szablonach ten path
   res.locals.path = req.path;
-  console.log(res)
+  // console.log(res)
   // dzieki next sie nei zawiesi i przejdzie do nastepnego routingu
   next()
 })
