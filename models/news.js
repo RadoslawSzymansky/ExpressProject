@@ -4,8 +4,8 @@ var Schema = mongoose.Schema
 
 
 var newsSchema = new Schema({
-    description: { type: String, required: true },
-    title: { type: String, required: true },
+    description: { type: String, required: [true, 'Pole description jest wymagane'] },
+    title: { type: String, required: [true,'Pole tytuł jest wymagane'] },
     created: {type: Date, default: Date.now}
 });
 

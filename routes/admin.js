@@ -30,12 +30,43 @@ router.get('/', (req, res, next) => {
     //     console.log(err)
     // })
     // calback czyli to co po przechwyceniu requestu
+    // metoda find pobieraa artykuly 
+    // ma rozne parametry 
+    const data = News.find({}, (err, data) =>{
+        console.log(data)
+        res.render('admin/index', { title: 'Dodaj news', data })
+    })
 
     // index to nazwa szablonu czyli tutaj index pug, drui praramet - obiekt. parametry przekazywane do szablony
-    res.render('admin/ndex', { title: 'Admin' });
+    // res.render('admin/index', { title: 'Admin' });
 });
 router.get('/news/add', (req, res) =>{
-    res.render('admin/news-form', {title: 'Dodaj news'})
+    res.render('admin/news-form', {title: 'Dodaj news', body: {}})
+})
+router.post('/news/add', (req, res) => {
+    const body = req.body;
+    const newsData = new News(body);
+    // bledy z tego co require dalismy itp
+    // console.log(errors)
+    // walidacje, w mongoose dokumentacji
+    const errors = newsData.validateSync();
+    console.log( req)
+    newsData.save(err=>{
+        if (err) {
+            res.render('admin/news-form', { title: 'Dodaj news', errors, body })
+        }else {
+            res.redirect('/admin')
+        }
+    })
+    // res.render('admin/news-form', { title: 'Dodaj news' , errors, body})
+})
+
+// id dodatkowy parametr/ po :  tworzy sie nazwa . Pobieramy ja z poziou routingu i na podtsaiwe id usuwamy za pomoca mongoosa
+router.get('/news/delete/:id', (req, res) => {
+    News.findByIdAndDelete(req.params.id, (err)=> {
+        if (err) console.log(err)
+        res.redirect('/admin')
+    })
 })
 
 module.exports = router;
