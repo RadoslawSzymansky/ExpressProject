@@ -27,7 +27,6 @@ router.post('/', (req, res, next) =>{
             req.session.vote = 1;
             res.redirect('/quiz')
         })
-
     })
 })
 
