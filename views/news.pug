@@ -4,5 +4,14 @@ extends layout
 
 block content
   h1= title
+  form(method='get')
+    input(type='text' name='search' value=search)
+    input(type='submit' value='szukaj')
   p Welcome to #{title}
+
+  each item in data
+    article 
+      h1(class='title')=item.title
+      p=item.created
+      p=item.description
 //- w p jest w #{} bo to string i jak w JSX
